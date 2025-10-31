@@ -1,5 +1,6 @@
 import asyncio
 import httpx
+import time
 
 # Lista de APIs a consultar
 APIS = [
@@ -18,23 +19,40 @@ async def fetch(url):
             # Retorna un diccionario con la URL y los datos JSON de la respuesta
             return {url: r.json()}
     except httpx.TimeoutException:
-        return {url: {"error": "La petición excedió el tiempo de espera"}}
+        return {url: {"error": "⏱️ La petición excedió el tiempo de espera"}}
     except httpx.HTTPStatusError as e:
-        return {url: {"error": f"Error HTTP: {e.response.status_code}"}}
+        return {url: {"error": f"❌ Error HTTP: {e.response.status_code}"}}
     except httpx.RequestError as e:
-        return {url: {"error": f"Error de conexión: {str(e)}"}}
+        return {url: {"error": f"🔌 Error de conexión: {str(e)}"}}
     except Exception as e:
-        return {url: {"error": f"Error inesperado: {str(e)}"}}
+        return {url: {"error": f"⚠️ Error inesperado: {str(e)}"}}
 
 # Función principal que coordina las tareas asíncronas
 async def main():
+    print("="*80)
+    print("🚀 Iniciando peticiones asíncronas...")
+    print("="*80)
+    
+    # Marca el tiempo de inicio
+    start_time = time.time()
+    
     # Ejecuta todas las peticiones de forma concurrente usando asyncio.gather
     # return_exceptions=True permite que continúe aunque una tarea falle
     results = await asyncio.gather(*(fetch(url) for url in APIS), return_exceptions=True)
     
-    # Imprime los resultados de cada petición
-    for result in results:
+    # Calcula el tiempo de ejecución
+    execution_time = time.time() - start_time
+    
+    # Imprime los resultados de cada petición de forma separada
+    for i, result in enumerate(results, 1):
+        print(f"\n{'='*80}")
+        print(f"📡 Resultado de la petición {i}:")
+        print(f"{'='*80}")
         print(result)
+    
+    print(f"\n{'='*80}")
+    print(f"⏱️ Tiempo total de ejecución: {execution_time:.3f} segundos")
+    print(f"{'='*80}")
 
 # Punto de entrada del script
 if __name__ == "__main__":
