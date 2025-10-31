@@ -1,6 +1,6 @@
 ## Script Asíncrono para Llamar APIs con Python
-Este script asíncrono en Python realiza peticiones concurrentes a dos APIs diferentes utilizando las bibliotecas asyncio y httpx.
-Autor: Daniel Felipe Ramirez Triana
+- Este script asíncrono en Python realiza peticiones concurrentes a dos APIs diferentes utilizando las bibliotecas asyncio y httpx.
+- #### Autor: Daniel Felipe Ramirez Triana
 ## APIs Utilizadas
 ### CoinDesk API: Proporciona el precio actual de Bitcoin en diferentes monedas.
 - URL: https://api.coindesk.com/v1/bpi/currentprice.json
